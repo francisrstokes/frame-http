@@ -8,13 +8,27 @@ module.exports = {
   },
 
   setHeader(name, value) {
-    this.response.setHeader(name, value);
+    this.response.setHeader(name.toLowerCase(), value);
+    return this;
+  },
+
+  removeHeader(name) {
+    this.response.removeHeader(name.toLowerCase());
     return this;
   },
 
   setStatus(code) {
     this.response.status = code;
     return this;
+  },
+
+  throw(err) {
+    this.thrownError = err;
+    throw err;
+  },
+
+  get requestHeaders() {
+    return this.request.headers;
   },
 
   get status() {
@@ -27,5 +41,9 @@ module.exports = {
 
   get path() {
     return this.request.url;
+  },
+
+  get headers() {
+    return this.response._headers;
   }
 };
